@@ -199,16 +199,37 @@ def handle_error(update, context: CallbackContext) -> None:
     update.message.reply_text(str(context.error))
 
 
+def get_data_dir() -> Path:
+    if 'ARROMBA_DATA_DIR' in environ:
+        return Path(environ['ARROMBA_DATA_DIR'])
+
+    return Path.home() / f".local/share/{__package__}"
+
+
 def get_persistence() -> BasePersistence:
-    data_dir = Path.home() / f".local/share/{__package__}"
+    data_dir = get_data_dir()
     data_dir.mkdir(parents=True, exist_ok=True)
+
+    assert __package__ is not None
 
     filename = data_dir / __package__
     return PicklePersistence(str(filename))
 
 
+def get_token_from_file(token_file_path: Path) -> str:
+    with token_file_path.open() as f:
+        return f.read().strip()
+
+
+def get_token():
+    if 'ARROMBA_TOKEN_FILE' in environ:
+        return get_token_from_file(Path(environ['ARROMBA_TOKEN_FILE']))
+
+    return environ['TOKEN']
+
+
 def main() -> None:
-    token = environ["TOKEN"]
+    token = get_token()
     updater = Updater(token, persistence=get_persistence())
     dispatcher = updater.dispatcher
 
