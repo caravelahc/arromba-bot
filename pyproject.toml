@@ -8,13 +8,18 @@ authors = ["Cauê Baasch de Souza <cauebs@pm.me>"]
 python = "^3.8"
 python-telegram-bot = "^13.3"
 
-[tool.poetry.dev-dependencies]
-pytest = "^5.2"
-black = {version = "^20.8b1", allow-prereleases = true}
-mypy = "^0.812"
+# [tool.poetry.dev-dependencies]
+# pytest = "^5.2"
+# black = {version = "^20.8b1", allow-prereleases = true}
+# mypy = "^0.812"
 
 [tool.poetry.scripts]
 arromba-bot = "arromba_bot:main"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.1.1"
+black = "^24.3.0"
+mypy = "^1.9.0"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
