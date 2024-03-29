@@ -233,6 +233,8 @@ def main() -> None:
     updater = Updater(token, persistence=get_persistence())
     dispatcher = updater.dispatcher
 
+    assert dispatcher is not None
+
     dispatcher.add_handler(CommandHandler("sub", handle_sub))
     dispatcher.add_handler(CommandHandler("unsub", handle_unsub))
     dispatcher.add_handler(CommandHandler("list", handle_list))
